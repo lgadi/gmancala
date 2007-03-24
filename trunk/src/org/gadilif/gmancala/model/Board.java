@@ -2,14 +2,17 @@ package org.gadilif.gmancala.model;
 
 public class Board {
 
+	private final static int LEFT_HOLE = 0;
+	private final static int RIGHT_HOLE = 7;
+	private final static int INITIAL_CELL_COUNT = 4;
 	int[] cells = new int[14];
 	private boolean initialized;
 	public void init() {
 		for (int i=0;i<14;i++) {
 			cells[i] = 4;
 		}
-		cells[0] = 0;
-		cells[7] = 0;
+		cells[LEFT_HOLE] = 0;
+		cells[RIGHT_HOLE] = 0;
 		this.initialized = true;
 	}
 
@@ -44,7 +47,7 @@ public class Board {
 		result.append("   +---+---+---+---+---+---+   \n");
 		
 		result.append("   |");
-		for (int i=13;i>7;i--) {
+		for (int i=13;i>RIGHT_HOLE;i--) {
 			result.append(format3(cells[i]));
 			result.append("|");
 		}
@@ -54,7 +57,7 @@ public class Board {
 		result.append(format3(cells[7]));
 		result.append("\n");
 		result.append("   |");
-		for (int i=1;i<7;i++) {
+		for (int i=1;i<RIGHT_HOLE;i++) {
 			result.append(format3(cells[i]));
 			result.append("|");
 		}
@@ -64,11 +67,11 @@ public class Board {
 	}
 
 	public int getRightHoleValue() {
-		return cells[7];
+		return cells[RIGHT_HOLE];
 	}
 
 	public int getLeftHoleValue() {
-		return cells[0];
+		return cells[LEFT_HOLE];
 	}
 
 	public boolean canPlay(int i) {
