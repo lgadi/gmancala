@@ -1,6 +1,6 @@
 package org.gadilif.gmancala.model;
 
-import org.gadilif.gmancala.data.Board;
+import org.gadilif.gmancala.model.Board;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
