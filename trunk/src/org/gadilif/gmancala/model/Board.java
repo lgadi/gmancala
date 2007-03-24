@@ -42,9 +42,12 @@ public class Board {
 		}
 		return spaces+value;
 	}
+	
+	
 	public String toString() {
 		StringBuilder result = new StringBuilder("Board:\n");
-		result.append("   +---+---+---+---+---+---+   \n");
+		String separator = "+---+---+---+---+---+---+";
+		result.append("   "+separator+"   \n");
 		
 		result.append("   |");
 		for (int i=13;i>RIGHT_HOLE;i--) {
@@ -52,17 +55,19 @@ public class Board {
 			result.append("|");
 		}
 		result.append("\n");
-		result.append(format3(cells[0]));
-		result.append("+---+---+---+---+---+---+");
-		result.append(format3(cells[7]));
-		result.append("\n");
+		
+		result.append(format3(cells[LEFT_HOLE]))
+			  .append(separator)
+			  .append(format3(cells[RIGHT_HOLE]))
+			  .append("\n");
+		
 		result.append("   |");
 		for (int i=1;i<RIGHT_HOLE;i++) {
 			result.append(format3(cells[i]));
 			result.append("|");
 		}
 		result.append("\n");
-		result.append("   +---+---+---+---+---+---+   \n");
+		result.append("   "+separator+"   \n");
 		return result.toString();
 	}
 
