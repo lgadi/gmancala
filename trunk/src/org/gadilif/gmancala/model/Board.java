@@ -1,4 +1,4 @@
-package org.gadilif.gmancala.data;
+package org.gadilif.gmancala.model;
 
 public class Board {
 
