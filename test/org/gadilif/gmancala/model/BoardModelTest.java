@@ -1,18 +1,23 @@
 package org.gadilif.gmancala.model;
 
-import org.gadilif.gmancala.model.BoardModel;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.gadilif.gmancala.view.BoardTextView;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class BoardModelTest {
 	
 	private BoardModel board;
+	private BoardTextView boardView;
 	
 	@Before
 	public void init() {
 		board = new BoardModel();
 		board.init();
+		boardView = new BoardTextView(board);
 	}
 	
 	@Test
@@ -23,7 +28,7 @@ public class BoardModelTest {
 	@Test
 	public void getCellValue() {
 		assertEquals(4, board.getCellValue(1));
-		System.out.println(board);
+		boardView.draw(System.out);
 	}
 	
 	@Test
@@ -31,7 +36,7 @@ public class BoardModelTest {
 		board.play(4);
 		assertEquals(0, board.getCellValue(4));
 		assertEquals(1, board.getRightHoleValue());
-		System.out.println(board);
+		boardView.draw(System.out);
 	}
 	
 	@Test
@@ -39,7 +44,7 @@ public class BoardModelTest {
 		board.play(11);
 		assertEquals(0, board.getCellValue(11));
 		assertEquals(1, board.getLeftHoleValue());
-		System.out.println(board);
+		boardView.draw(System.out);
 	}
 	
 	@Test
@@ -51,7 +56,7 @@ public class BoardModelTest {
 		assertEquals(1, board.getRightHoleValue());
 		board.play(5);
 		assertEquals(2, board.getRightHoleValue());
-		System.out.println(board);
+		boardView.draw(System.out);
 	}
 
 }
