@@ -4,16 +4,26 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import org.gadilif.gmancala.model.BoardModel;
+import org.gadilif.gmancala.view.listeners.ICellChangedListener;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BoardTextViewTest {
+	
+	
+	BoardModel boardModel;
+	BoardTextView boardTextView;
+	
+	@Before
+	public void before() {
+		boardModel = new BoardModel();
+		boardModel.init();
+		boardTextView = new BoardTextView(boardModel, System.out);
+	}
 	@Test
 	public void drawPasses() {
-		BoardModel boardModel = new BoardModel();
-		boardModel.init();
-		BoardTextView boardTextView = new BoardTextView(boardModel);
-		boardTextView.draw(System.out);
+		boardTextView.draw();
 	}
 
 	
@@ -38,11 +48,22 @@ public class BoardTextViewTest {
 	
 	@Test
 	public void drawToMyStream() {
-		BoardModel boardModel = new BoardModel();
-		boardModel.init();
-		BoardTextView boardTextView = new BoardTextView(boardModel);
 		MyPrintStream myPrintStream = new MyPrintStream(System.out);
-		boardTextView.draw(myPrintStream);
+		boardTextView.setOut(myPrintStream);
+		boardTextView.draw();
 		assertEquals(6, myPrintStream.getLineCount());
+	}
+	
+	@Test
+	public void testDebugging() {
+		MyPrintStream myPrintStream = new MyPrintStream(System.out);
+		boardTextView.setOut(myPrintStream);
+		boardModel.addCellChangedListener(new ICellChangedListener() {
+			public void cellChanged(int cellId, int newValue) {
+				boardTextView.debug("cell #"+cellId+" new value is "+newValue);
+			}
+		});
+		boardModel.play(4);
+		assertEquals(8, myPrintStream.getLineCount());
 	}
 }

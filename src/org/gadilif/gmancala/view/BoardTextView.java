@@ -6,9 +6,12 @@ import org.gadilif.gmancala.model.BoardModel;
 
 public class BoardTextView {
 
+	private PrintStream out;
+	
 	private BoardModel boardModel;
-	public BoardTextView(BoardModel boardModel) {
+	public BoardTextView(BoardModel boardModel, PrintStream out) {
 		this.boardModel = boardModel;
+		this.out = out;
 	}
 
 	
@@ -23,7 +26,7 @@ public class BoardTextView {
 		return spaces+value;
 	}
 	
-	public void draw(PrintStream out) {
+	public void draw() {
 		out.println("Board:");
 		String separator = "+---+---+---+---+---+---+";
 		out.println("   "+separator+"   ");
@@ -47,6 +50,16 @@ public class BoardTextView {
 		out.println("");
 		out.println("   "+separator+"   ");
 		
+	}
+
+
+	public void debug(String message) {
+		out.println(message);
+	}
+
+
+	public void setOut(PrintStream out) {
+		this.out = out;
 	}
 
 }
