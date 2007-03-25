@@ -1,17 +1,17 @@
 package org.gadilif.gmancala.model;
 
-import org.gadilif.gmancala.model.Board;
+import org.gadilif.gmancala.model.BoardModel;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BoardTest {
+public class BoardModelTest {
 	
-	private Board board;
+	private BoardModel board;
 	
 	@Before
 	public void init() {
-		board = new Board();
+		board = new BoardModel();
 		board.init();
 	}
 	

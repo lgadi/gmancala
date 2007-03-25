@@ -1,6 +1,6 @@
 package org.gadilif.gmancala.model;
 
-public class Board {
+public class BoardModel {
 
 	private final static int LEFT_HOLE = 0;
 	private final static int RIGHT_HOLE = 7;
