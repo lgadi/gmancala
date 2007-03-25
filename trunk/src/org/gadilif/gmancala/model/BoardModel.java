@@ -1,5 +1,10 @@
 package org.gadilif.gmancala.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.gadilif.gmancala.view.listeners.ICellChangedListener;
+
 public class BoardModel {
 
 	private final static int LEFT_HOLE = 0;
@@ -7,6 +12,7 @@ public class BoardModel {
 	private final static int INITIAL_CELL_COUNT = 4;
 	int[] cells = new int[14];
 	private boolean initialized;
+	private List<ICellChangedListener> cellChangedListeners;
 	
 	public void init() {
 		for (int i=0;i<14;i++) {
@@ -14,6 +20,7 @@ public class BoardModel {
 		}
 		cells[LEFT_HOLE] = 0;
 		cells[RIGHT_HOLE] = 0;
+		cellChangedListeners = new ArrayList<ICellChangedListener>();
 		this.initialized = true;
 	}
 
@@ -28,13 +35,28 @@ public class BoardModel {
 	public void play(int start) {
 		int cell = start;
 		while (cells[start] > 0) {
-			cells[(++cell)%14]++;
-			cells[start]--;
+			incrementCell((++cell)%14);
+			decrementCell(start);
 		}
 	}
 	
 	
+	private void incrementCell(int i) {
+		setCellValue(i, cells[i]+1);
+		
+	}
 	
+	private void decrementCell(int i) {
+		setCellValue(i, cells[i]-1);
+		
+	}
+
+	public void setCellValue(int cell, int value) {
+		cells[cell] = value;
+		for (ICellChangedListener listener : cellChangedListeners) {
+			listener.cellChanged(cell, value);
+		}
+	}
 	
 	
 	public int getRightHoleValue() {
@@ -55,6 +77,11 @@ public class BoardModel {
 	
 	public int getLeftHole() {
 		return LEFT_HOLE;
+	}
+
+	public void addCellChangedListener(ICellChangedListener listener) {
+		cellChangedListeners.add(listener);
+		
 	}
 
 }
