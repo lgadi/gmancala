@@ -73,6 +73,16 @@ public class BoardModel {
 	
 	private void decrementCell(int i) {
 		setCellValue(i, cells[i]-1);
+	}
+	
+	private boolean isRowAllZero(int start, int end) {
+		for (int i=start;i<end;i++) {
+			if (cells[i] > 0) return false;
+		}
+		return true;
+	}
+	public boolean isGameOver() {
+		return isRowAllZero(1,7) || isRowAllZero(8,14);
 		
 	}
 

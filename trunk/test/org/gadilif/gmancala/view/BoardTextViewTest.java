@@ -13,7 +13,7 @@ public class BoardTextViewTest {
 	
 	
 	BoardModel boardModel;
-	BoardTextView boardTextView;
+	IBoardView boardTextView;
 	
 	@Before
 	public void before() {
@@ -21,18 +21,11 @@ public class BoardTextViewTest {
 		boardModel.init();
 		boardTextView = new BoardTextView(boardModel, System.out);
 	}
-	@Test
-	public void drawPasses() {
-		boardTextView.draw();
-	}
 
-	
 	private class MyPrintStream extends PrintStream {
-
 		int lineCount;
 		public MyPrintStream(OutputStream out) {
 			super(out);
-		
 		}
 
 		@Override
