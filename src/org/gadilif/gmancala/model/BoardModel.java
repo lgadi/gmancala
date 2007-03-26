@@ -32,11 +32,36 @@ public class BoardModel {
 		return cells[i];
 	}
 
+	private boolean isHole(int cell) {
+		return ((cell == LEFT_HOLE) || (cell == RIGHT_HOLE));
+	}
+	
+	private void capture(int cell, int hole) {
+		if (cells[14-cell] > 0) {
+			setCellValue(hole, cells[hole]+cells[14-cell]+1);
+			setCellValue(cell,0);
+			setCellValue(14-cell,0);
+		}
+	}
 	public void play(int start) {
 		int cell = start;
 		while (cells[start] > 0) {
 			incrementCell((++cell)%14);
 			decrementCell(start);
+		}
+		cell %= 14;
+		if (!isHole(cell) && (cells[cell] == 1)) {
+			if (start < 7) {
+				if (cell < 7) {
+					capture(cell, RIGHT_HOLE);
+				}
+			}
+			else { //start >7
+				if (cell > 7) {
+					capture(cell, LEFT_HOLE);
+				} 
+			}
+				
 		}
 	}
 	
