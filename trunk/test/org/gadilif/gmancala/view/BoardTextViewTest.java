@@ -13,7 +13,7 @@ public class BoardTextViewTest {
 	
 	
 	BoardModel boardModel;
-	IBoardView boardTextView;
+	BoardTextView boardTextView;
 	
 	@Before
 	public void before() {
