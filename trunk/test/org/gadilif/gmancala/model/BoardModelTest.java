@@ -28,7 +28,7 @@ public class BoardModelTest {
 	@Test
 	public void getCellValue() {
 		assertEquals(4, board.getCellValue(1));
-		boardView.draw();
+		//boardView.draw();
 	}
 	
 	@Test
@@ -36,7 +36,7 @@ public class BoardModelTest {
 		board.play(4);
 		assertEquals(0, board.getCellValue(4));
 		assertEquals(1, board.getRightHoleValue());
-		boardView.draw();
+		//boardView.draw();
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ public class BoardModelTest {
 		board.play(11);
 		assertEquals(0, board.getCellValue(11));
 		assertEquals(1, board.getLeftHoleValue());
-		boardView.draw();
+		//boardView.draw();
 	}
 	
 	@Test
@@ -56,7 +56,24 @@ public class BoardModelTest {
 		assertEquals(1, board.getRightHoleValue());
 		board.play(5);
 		assertEquals(2, board.getRightHoleValue());
-		boardView.draw();
+		//boardView.draw();
+	}
+	
+	@Test
+	public void capture() {
+		board.play(6);
+		board.play(12);
+		board.play(1);
+		assertEquals(7, board.getRightHoleValue());
+		//boardView.draw();
 	}
 
+	@Test
+	public void capture2() {
+		board.play(13);
+		board.play(6);
+		board.play(8);
+		assertEquals(7, board.getLeftHoleValue());
+		boardView.draw();
+	}
 }
