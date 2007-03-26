@@ -1,17 +1,16 @@
 package org.gadilif.gmancala.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.gadilif.gmancala.view.BoardTextView;
+import org.gadilif.gmancala.view.IBoardView;
 import org.junit.Before;
 import org.junit.Test;
 
 public class BoardModelTest {
 	
 	private BoardModel board;
-	private BoardTextView boardView;
+	private IBoardView boardView;
 	
 	@Before
 	public void init() {
@@ -69,11 +68,40 @@ public class BoardModelTest {
 	}
 
 	@Test
-	public void capture2() {
+	public void capture2() {	
 		board.play(13);
 		board.play(6);
 		board.play(8);
 		assertEquals(7, board.getLeftHoleValue());
+		//boardView.draw();
+	}
+	
+	@Test
+	public void gameNotOver() {
+		assertFalse(board.isGameOver());
+	}
+	
+	@Test
+	public void gameOverLower() {
+		board.play(1);
+		board.play(2);
+		board.play(3);
+		board.play(4);
+		board.play(5);
+		board.play(6);
+		assertTrue(board.isGameOver());
+		//boardView.draw();
+		
+	}
+	@Test
+	public void gameOverUpper() {
+		board.play(8);
+		board.play(9);
+		board.play(10);
+		board.play(11);
+		board.play(12);
+		board.play(13);
+		assertTrue(board.isGameOver());
 		boardView.draw();
 	}
 }
