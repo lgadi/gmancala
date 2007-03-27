@@ -1,8 +1,12 @@
 package org.gadilif.gmancala.view;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import org.gadilif.gmancala.model.BoardModel;
+import org.gadilif.gmancala.strategies.IPlayerStrategy.PlayerType;
 
 public class BoardTextView implements IBoardView {
 
@@ -69,6 +73,19 @@ public class BoardTextView implements IBoardView {
 	 */
 	public void setOut(PrintStream out) {
 		this.out = out;
+	}
+
+
+	public int getPlay(PlayerType playerType) {
+		System.out.print("Enter move for player "+playerType+": ");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			return Integer.parseInt(reader.readLine());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace(System.err);
+		}
+		return -1;
 	}
 
 }
