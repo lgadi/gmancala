@@ -3,6 +3,7 @@ package org.gadilif.gmancala.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gadilif.gmancala.strategies.IPlayerStrategy.PlayerType;
 import org.gadilif.gmancala.view.listeners.ICellChangedListener;
 
 public class BoardModel {
@@ -43,8 +44,9 @@ public class BoardModel {
 			setCellValue(14-cell,0);
 		}
 	}
-	public void play(int start) {
+	public boolean play(int start) {
 		int cell = start;
+		if (cells[start] == 0) return true;
 		while (cells[start] > 0) {
 			incrementCell((++cell)%14);
 			decrementCell(start);
@@ -63,6 +65,7 @@ public class BoardModel {
 			}
 				
 		}
+		return isHole(cell);
 	}
 	
 	
@@ -117,6 +120,25 @@ public class BoardModel {
 	public void addCellChangedListener(ICellChangedListener listener) {
 		cellChangedListeners.add(listener);
 		
+	}
+
+	private int getRowSum(int start, int end) {
+		int sum = 0;
+		for (int i=start;i<end;i++) {
+			sum += cells[i];
+		}
+		return sum;
+	}
+	
+	public int getPlayer1Score() {
+		return getRowSum(0,7);
+	}
+	
+	public int getPlayer2Score() {
+		return getRowSum(7, 14);
+	}
+	public PlayerType getWinner() {
+		return (getPlayer1Score() > getPlayer2Score())?PlayerType.ONE:PlayerType.TWO;
 	}
 
 }

@@ -73,7 +73,7 @@ public class BoardModelTest {
 		board.play(6);
 		board.play(8);
 		assertEquals(7, board.getLeftHoleValue());
-		//boardView.draw();
+	//	boardView.draw();
 	}
 	
 	@Test
@@ -102,6 +102,16 @@ public class BoardModelTest {
 		board.play(12);
 		board.play(13);
 		assertTrue(board.isGameOver());
-		boardView.draw();
+	//	boardView.draw();
+	}
+	
+	@Test
+	public void hasAnotherTurn() {
+		assertTrue(board.play(3));
+	}
+	
+	@Test
+	public void doesntHaveAnotherTurn() {
+		assertFalse(board.play(2));
 	}
 }
