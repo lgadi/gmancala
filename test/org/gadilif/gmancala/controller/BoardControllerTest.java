@@ -16,6 +16,6 @@ public class BoardControllerTest {
 		BoardController controller = new BoardController(model, view);
 		controller.setPlayer1(new HumanPlayer(IPlayerStrategy.PlayerType.ONE, controller));
 		controller.setPlayer2(new HumanPlayer(IPlayerStrategy.PlayerType.TWO, controller));
-		controller.run();
+		//controller.run();
 	}
 }
