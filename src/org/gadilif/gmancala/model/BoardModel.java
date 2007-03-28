@@ -3,9 +3,8 @@ package org.gadilif.gmancala.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.gadilif.gmancala.strategies.PlayerType.*;
+import static org.gadilif.gmancala.model.PlayerType.*;
 
-import org.gadilif.gmancala.strategies.PlayerType;
 import org.gadilif.gmancala.view.listeners.ICellChangedListener;
 
 public class BoardModel {

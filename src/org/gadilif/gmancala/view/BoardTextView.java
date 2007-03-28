@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import org.gadilif.gmancala.model.BoardModel;
-import org.gadilif.gmancala.strategies.PlayerType;
+import org.gadilif.gmancala.model.PlayerType;
 
 public class BoardTextView implements IBoardView {
 
