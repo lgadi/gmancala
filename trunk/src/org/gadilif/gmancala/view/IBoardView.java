@@ -1,6 +1,6 @@
 package org.gadilif.gmancala.view;
 
-import org.gadilif.gmancala.strategies.IPlayerStrategy;
+import org.gadilif.gmancala.strategies.PlayerType;
 
 
 public interface IBoardView {
@@ -9,6 +9,6 @@ public interface IBoardView {
 
 	void debug(String message);
 	
-	int getPlay(IPlayerStrategy.PlayerType playerType);
+	int getPlay(PlayerType playerType);
 
 }

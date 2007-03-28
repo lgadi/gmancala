@@ -2,6 +2,7 @@ package org.gadilif.gmancala.controller;
 
 import org.gadilif.gmancala.model.BoardModel;
 import org.gadilif.gmancala.strategies.IPlayerStrategy;
+import org.gadilif.gmancala.strategies.PlayerType;
 import org.gadilif.gmancala.view.IBoardView;
 
 public class BoardController {
@@ -26,7 +27,7 @@ public class BoardController {
 		return model.play(cell);
 	}
 	
-	public int getPlay(final IPlayerStrategy.PlayerType playerType) {
+	public int getPlay(final PlayerType playerType) {
 		return view.getPlay(playerType);
 	} 
 	public void run() {
@@ -48,8 +49,8 @@ public class BoardController {
 					result = player2.play();
 				}
 			}
-			view.debug("Player 1 score: "+model.getPlayer1Score());
-			view.debug("Player 2 score: "+model.getPlayer2Score());
+			view.debug("Player 1 score: "+model.getPlayerScore(PlayerType.ONE));
+			view.debug("Player 2 score: "+model.getPlayerScore(PlayerType.TWO));
 			view.debug("Winner is: "+model.getWinner());
 		}
 		
