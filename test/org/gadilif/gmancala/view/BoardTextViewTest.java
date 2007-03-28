@@ -43,7 +43,7 @@ public class BoardTextViewTest {
 	public void drawToMyStream() {
 		MyPrintStream myPrintStream = new MyPrintStream(System.out);
 		boardTextView.setOut(myPrintStream);
-		boardTextView.draw();
+		boardTextView.refresh();
 		assertEquals(6, myPrintStream.getLineCount());
 	}
 	

@@ -5,7 +5,7 @@ import org.gadilif.gmancala.model.PlayerType;
 
 public interface IBoardView {
 
-	void draw();
+	void refresh();
 
 	void debug(String message);
 	

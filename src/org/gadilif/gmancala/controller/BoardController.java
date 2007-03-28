@@ -47,24 +47,22 @@ public class BoardController {
 		int target = play(cell);
 		return ((target == -1) || (target == player.getPlayer().getHome()));
 	}
+	
+	private void doPlay(IPlayerStrategy player) {
+		view.refresh();
+		boolean moveResult = singleMove(player);
+		view.refresh();
+		while (moveResult) {
+			moveResult = singleMove(player);
+			if (!moveResult) view.refresh();
+		}
+	}
 	public void run() {
 		while (!model.isGameOver()) {
-			view.draw();
-			boolean moveResult = singleMove(player1);
-			view.draw();
-			while (moveResult) {
-				moveResult = singleMove(player1);
-				view.draw();
-			}
+			doPlay(player1);
 			if (!model.isGameOver()) {
-				moveResult = singleMove(player2);
-				view.draw();
-				while (moveResult) {
-					singleMove(player2);
-					view.draw();
-				}
+				doPlay(player2);
 			}
-			
 		}
 		view.debug("Player 1 score: "
 				+ model.getPlayerScore(PlayerType.ONE));
