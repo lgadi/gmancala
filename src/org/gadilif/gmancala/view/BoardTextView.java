@@ -13,13 +13,13 @@ public class BoardTextView implements IBoardView {
 	private PrintStream out;
 	
 	private BoardModel boardModel;
-	public BoardTextView(BoardModel boardModel, PrintStream out) {
+	public BoardTextView(final BoardModel boardModel, final PrintStream out) {
 		this.boardModel = boardModel;
 		this.out = out;
 	}
 
 	
-	private String format3(int value) {
+	private String format3(final int value) {
 		String spaces = "";
 		if (value < 10) {
 			spaces = "  ";
@@ -63,7 +63,7 @@ public class BoardTextView implements IBoardView {
 	/* (non-Javadoc)
 	 * @see org.gadilif.gmancala.view.IBoardView#debug(java.lang.String)
 	 */
-	public void debug(String message) {
+	public void debug(final String message) {
 		out.println(message);
 	}
 
@@ -71,12 +71,12 @@ public class BoardTextView implements IBoardView {
 	/* (non-Javadoc)
 	 * @see org.gadilif.gmancala.view.IBoardView#setOut(java.io.PrintStream)
 	 */
-	public void setOut(PrintStream out) {
+	public void setOut(final PrintStream out) {
 		this.out = out;
 	}
 
 
-	public int getPlay(PlayerType playerType) {
+	public int getPlay(final PlayerType playerType) {
 		System.out.print("Enter move for player "+playerType+": ");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {

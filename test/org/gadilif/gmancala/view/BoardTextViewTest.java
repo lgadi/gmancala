@@ -24,12 +24,12 @@ public class BoardTextViewTest {
 
 	private class MyPrintStream extends PrintStream {
 		int lineCount;
-		public MyPrintStream(OutputStream out) {
+		public MyPrintStream(final OutputStream out) {
 			super(out);
 		}
 
 		@Override
-		public void println(String x) {
+		public void println(final String x) {
 			super.println(x);
 			lineCount++;
 		}
@@ -52,7 +52,7 @@ public class BoardTextViewTest {
 		MyPrintStream myPrintStream = new MyPrintStream(System.out);
 		boardTextView.setOut(myPrintStream);
 		boardModel.addCellChangedListener(new ICellChangedListener() {
-			public void cellChanged(int cellId, int newValue) {
+			public void cellChanged(final int cellId, final int newValue) {
 				boardTextView.debug("cell #"+cellId+" new value is "+newValue);
 			}
 		});

@@ -12,21 +12,21 @@ public class BoardController {
 	private IPlayerStrategy player1;
 	private IPlayerStrategy player2;
 	
-	public BoardController(BoardModel model, IBoardView view) {
+	public BoardController(final BoardModel model, final IBoardView view) {
 		this.model = model;
 		this.view = view;
 	}
-	public void setPlayer1(IPlayerStrategy player) {
+	public void setPlayer1(final IPlayerStrategy player) {
 		this.player1 = player;
 	}
-	public void setPlayer2(IPlayerStrategy player) {
+	public void setPlayer2(final IPlayerStrategy player) {
 		this.player2 = player;	
 	}
-	public boolean play(int cell) {
+	public boolean play(final int cell) {
 		return model.play(cell);
 	}
 	
-	public int getPlay(IPlayerStrategy.PlayerType playerType) {
+	public int getPlay(final IPlayerStrategy.PlayerType playerType) {
 		return view.getPlay(playerType);
 	} 
 	public void run() {
@@ -34,7 +34,7 @@ public class BoardController {
 		while (!model.isGameOver()) {
 			view.draw();
 			PlayResult result = player1.play();
-			while (result != PlayResult.OK && !model.isGameOver()) {
+			while ((result != PlayResult.OK) && !model.isGameOver()) {
 				view.debug("Result: "+result);
 				view.draw();
 				result = player1.play();
@@ -42,7 +42,7 @@ public class BoardController {
 			view.draw();
 			if (!model.isGameOver()) {
 				result = player2.play();
-				while (result != PlayResult.OK && !model.isGameOver()) {
+				while ((result != PlayResult.OK) && !model.isGameOver()) {
 					view.debug("Result: "+result);
 					view.draw();
 					result = player2.play();
