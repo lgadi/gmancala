@@ -10,7 +10,7 @@ public class RandomPlayer extends AbstractPlayer {
 	}
 
 	private int getRandomCell() {
-		return (int)(Math.random()*(player.getEnd()-player.getStart()-1))+player.getStart();
+		return (int)(Math.random()*(player.getEnd()-player.getStart()))+player.getStart();
 	}
 	@Override
 	public int play() {

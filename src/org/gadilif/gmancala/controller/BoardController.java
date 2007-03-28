@@ -7,10 +7,7 @@ import org.gadilif.gmancala.view.IBoardView;
 
 public class BoardController {
 
-	public enum PlayResult {
-		INVALID, OK, ANOTHER
-	}
-
+	
 	private BoardModel model;
 
 	private IBoardView view;
@@ -52,9 +49,9 @@ public class BoardController {
 		view.refresh();
 		boolean moveResult = singleMove(player);
 		view.refresh();
-		while (moveResult) {
+		while (moveResult && !model.isGameOver()) {
 			moveResult = singleMove(player);
-			if (!moveResult) view.refresh();
+			view.refresh();
 		}
 	}
 	public void run() {
