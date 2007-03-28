@@ -123,7 +123,7 @@ public class BoardModelTest {
 		assertTrue("should be game over for player two",board.isGameOver());
 	
 	}
-	
+	/*
 	@Test
 	public void hasAnotherTurn() {
 		assertTrue(board.play(3));
@@ -133,4 +133,5 @@ public class BoardModelTest {
 	public void doesntHaveAnotherTurn() {
 		assertFalse(board.play(2));
 	}
+	*/
 }
