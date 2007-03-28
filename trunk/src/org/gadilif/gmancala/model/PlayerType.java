@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.gadilif.gmancala.strategies;
+package org.gadilif.gmancala.model;
 
 public enum PlayerType {
 	ONE(1, 7, 7), TWO(8, 14, 0);

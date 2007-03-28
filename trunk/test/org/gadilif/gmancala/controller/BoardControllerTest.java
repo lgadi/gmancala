@@ -1,8 +1,8 @@
 package org.gadilif.gmancala.controller;
 
 import org.gadilif.gmancala.model.BoardModel;
+import org.gadilif.gmancala.model.PlayerType;
 import org.gadilif.gmancala.strategies.HumanPlayer;
-import org.gadilif.gmancala.strategies.PlayerType;
 import org.gadilif.gmancala.view.BoardTextView;
 import org.gadilif.gmancala.view.IBoardView;
 import org.junit.Test;

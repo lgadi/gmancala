@@ -1,6 +1,6 @@
 package org.gadilif.gmancala.view;
 
-import org.gadilif.gmancala.strategies.PlayerType;
+import org.gadilif.gmancala.model.PlayerType;
 
 
 public interface IBoardView {
