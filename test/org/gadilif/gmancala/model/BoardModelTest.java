@@ -116,10 +116,12 @@ public class BoardModelTest {
 		board.play(9);
 		board.play(10);
 		board.play(11);
+		board.play(13);
 		board.play(12);
 		board.play(13);
-		assertTrue(board.isGameOver());
-	//	boardView.draw();
+		//boardView.draw();
+		assertTrue("should be game over for player two",board.isGameOver());
+	
 	}
 	
 	@Test

@@ -3,24 +3,25 @@ package org.gadilif.gmancala.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gadilif.gmancala.strategies.IPlayerStrategy.PlayerType;
+import static org.gadilif.gmancala.strategies.PlayerType.*;
+
+import org.gadilif.gmancala.strategies.PlayerType;
 import org.gadilif.gmancala.view.listeners.ICellChangedListener;
 
 public class BoardModel {
 
-	private final static int LEFT_HOLE = 0;
-	private final static int RIGHT_HOLE = 7;
 	private final static int INITIAL_CELL_COUNT = 4;
-	int[] cells = new int[14];
+	private final static int MAX_CELLS = 14;
+	int[] cells = new int[MAX_CELLS];
 	private boolean initialized;
 	private List<ICellChangedListener> cellChangedListeners;
 	
 	public void init() {
-		for (int i=0;i<14;i++) {
+		for (int i=0;i<MAX_CELLS;i++) {
 			cells[i] = INITIAL_CELL_COUNT;
 		}
-		cells[LEFT_HOLE] = 0;
-		cells[RIGHT_HOLE] = 0;
+		cells[TWO.getHome()] = 0;
+		cells[ONE.getHome()] = 0;
 		cellChangedListeners = new ArrayList<ICellChangedListener>();
 		this.initialized = true;
 	}
@@ -34,14 +35,14 @@ public class BoardModel {
 	}
 
 	private boolean isHole(final int cell) {
-		return ((cell == LEFT_HOLE) || (cell == RIGHT_HOLE));
+		return ((cell == TWO.getHome()) || (cell == ONE.getHome()));
 	}
 	
 	private void capture(final int cell, final int hole) {
-		if (cells[14-cell] > 0) {
-			setCellValue(hole, cells[hole]+cells[14-cell]+1);
+		if (cells[MAX_CELLS-cell] > 0) {
+			setCellValue(hole, cells[hole]+cells[MAX_CELLS-cell]+1);
 			setCellValue(cell,0);
-			setCellValue(14-cell,0);
+			setCellValue(MAX_CELLS-cell,0);
 		}
 	}
 	public boolean play(final int start) {
@@ -51,26 +52,26 @@ public class BoardModel {
 		}
 		while (cells[start] > 0) {
 			cell++;
-			cell %= 14;
-			if ((start < 7) && (cell == 0)) {
+			cell %= MAX_CELLS;
+			if ((start < TWO.getStart()) && (cell == TWO.getHome())) {
 				continue;
 			}
-			if ((start > 7) && (cell == 7)) {
+			if ((start > TWO.getStart()) && (cell == ONE.getHome())) {
 				continue;
 			}
 			incrementCell(cell);
 			decrementCell(start);
 		}
-		cell %= 14;
+		cell %= MAX_CELLS;
 		if (!isHole(cell) && (cells[cell] == 1)) {
-			if (start < 7) {
-				if (cell < 7) {
-					capture(cell, RIGHT_HOLE);
+			if (start < TWO.getStart()) {
+				if (cell < TWO.getStart()) {
+					capture(cell, ONE.getHome());
 				}
 			}
-			else { //start > 7
-				if (cell > 7) {
-					capture(cell, LEFT_HOLE);
+			else { //start > player TWO start point
+				if (cell > TWO.getStart()) {
+					capture(cell, TWO.getHome());
 				} 
 			}
 				
@@ -90,7 +91,7 @@ public class BoardModel {
 	
 	
 	public boolean isGameOver() {
-		return (getRowSum(1,7) == 0) || (getRowSum(8,14) == 0);
+		return (getRowSum(ONE.getStart(),ONE.getEnd()) == 0) || (getRowSum(TWO.getStart(),TWO.getEnd()) == 0);
 		
 	}
 
@@ -103,11 +104,11 @@ public class BoardModel {
 	
 	
 	public int getRightHoleValue() {
-		return cells[RIGHT_HOLE];
+		return cells[ONE.getHome()];
 	}
 
 	public int getLeftHoleValue() {
-		return cells[LEFT_HOLE];
+		return cells[TWO.getHome()];
 	}
 
 	public boolean canPlay(final int i) {
@@ -115,11 +116,11 @@ public class BoardModel {
 	}
 	
 	public int getRightHole() {
-		return RIGHT_HOLE;
+		return ONE.getHome();
 	}
 	
 	public int getLeftHole() {
-		return LEFT_HOLE;
+		return TWO.getHome();
 	}
 
 	public void addCellChangedListener(final ICellChangedListener listener) {
@@ -130,20 +131,21 @@ public class BoardModel {
 	private int getRowSum(final int start, final int end) {
 		int sum = 0;
 		for (int i=start;i<end;i++) {
-			sum += cells[i%14];
+			sum += cells[i%MAX_CELLS];
 		}
 		return sum;
 	}
-	
-	public int getPlayer1Score() {
-		return getRowSum(1,8);
+	private int getRowSum(final int start, final int end, final int home) {
+		return getRowSum(start, end)+cells[home%MAX_CELLS];
 	}
 	
-	public int getPlayer2Score() {
-		return getRowSum(8, 15);
+	public int getPlayerScore(PlayerType player) {
+		return getRowSum(player.getStart(),player.getEnd(), player.getHome());
 	}
+	
+	
 	public PlayerType getWinner() {
-		return (getPlayer1Score() > getPlayer2Score())?PlayerType.ONE:PlayerType.TWO;
+		return (getPlayerScore(ONE) > getPlayerScore(TWO))?ONE:TWO;
 	}
 
 }
