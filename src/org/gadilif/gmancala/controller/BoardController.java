@@ -32,38 +32,45 @@ public class BoardController {
 		this.player2 = player;
 	}
 
-	public boolean play(final int cell) {
+	public int play(final int cell) {
 		return model.play(cell);
 	}
 
-	public int getPlay(final PlayerType playerType) {
-		return view.getPlay(playerType);
+	private boolean isValidSelection(int cell, PlayerType player) {
+		return (cell >= player.getStart() && cell < player.getEnd());
 	}
-
+	private boolean singleMove(IPlayerStrategy player) {
+		int cell = player.play();
+		while (!isValidSelection(cell, player.getPlayer())) {
+			cell = player.play();
+		}
+		int target = play(cell);
+		return ((target == -1) || (target == player.getPlayer().getHome()));
+	}
 	public void run() {
 		while (!model.isGameOver()) {
 			view.draw();
-			PlayResult result = player1.play();
-			while ((result != PlayResult.OK) && !model.isGameOver()) {
-				view.debug("Result: " + result);
-				view.draw();
-				result = player1.play();
-			}
+			boolean moveResult = singleMove(player1);
 			view.draw();
+			while (moveResult) {
+				moveResult = singleMove(player1);
+				view.draw();
+			}
 			if (!model.isGameOver()) {
-				result = player2.play();
-				while ((result != PlayResult.OK) && !model.isGameOver()) {
-					view.debug("Result: " + result);
+				moveResult = singleMove(player2);
+				view.draw();
+				while (moveResult) {
+					singleMove(player2);
 					view.draw();
-					result = player2.play();
 				}
 			}
-			view.debug("Player 1 score: "
-					+ model.getPlayerScore(PlayerType.ONE));
-			view.debug("Player 2 score: "
-					+ model.getPlayerScore(PlayerType.TWO));
-			view.debug("Winner is: " + model.getWinner());
+			
 		}
+		view.debug("Player 1 score: "
+				+ model.getPlayerScore(PlayerType.ONE));
+		view.debug("Player 2 score: "
+				+ model.getPlayerScore(PlayerType.TWO));
+		view.debug("Winner is: " + model.getWinner());
 
 	}
 

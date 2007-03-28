@@ -1,33 +1,19 @@
 package org.gadilif.gmancala.strategies;
 
 import org.gadilif.gmancala.controller.BoardController;
-import org.gadilif.gmancala.controller.BoardController.PlayResult;
 import org.gadilif.gmancala.model.PlayerType;
 
-public class HumanPlayer implements IPlayerStrategy {
+public class HumanPlayer extends AbstractPlayer {
 
-	private PlayerType playerType;
-	private BoardController controller;
 	
-	
-	public HumanPlayer(PlayerType playerType, BoardController controller) {
-		this.playerType = playerType;
-		this.controller = controller;
+	public HumanPlayer(PlayerType player, BoardController controller) {
+		super(player, controller);
 	}
 
-	public BoardController.PlayResult play() {
-		int cell = controller.getPlay(playerType);
-		if (playerType == PlayerType.ONE) {
-			if (cell < 7 && cell > 0) {
-				return controller.play(cell)?PlayResult.ANOTHER:PlayResult.OK;
-			}
-		}
-		else {
-			if (cell > 7 && cell < 14) {
-				return controller.play(cell)?PlayResult.ANOTHER:PlayResult.OK;
-			}
-		}
-		return PlayResult.INVALID;
+	@Override
+	public int play() {
+		return controller.getView().getPlay(player);
+		
 	}
 
 }

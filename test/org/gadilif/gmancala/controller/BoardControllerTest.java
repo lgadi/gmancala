@@ -16,6 +16,6 @@ public class BoardControllerTest {
 		BoardController controller = new BoardController(model, view);
 		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));
 		controller.setPlayer2(new HumanPlayer(PlayerType.TWO, controller));
-		//controller.run();
+		controller.run();
 	}
 }

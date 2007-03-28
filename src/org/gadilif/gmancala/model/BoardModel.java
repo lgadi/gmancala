@@ -44,10 +44,10 @@ public class BoardModel {
 			setCellValue(MAX_CELLS-cell,0);
 		}
 	}
-	public boolean play(final int start) {
+	public int play(final int start) {
 		int cell = start;
 		if (cells[start] == 0) {
-			return true;
+			return -1;
 		}
 		while (cells[start] > 0) {
 			cell++;
@@ -75,7 +75,7 @@ public class BoardModel {
 			}
 				
 		}
-		return isHole(cell);
+		return cell;
 	}
 	
 	
