@@ -16,8 +16,8 @@ public class BoardControllerTest {
 		model.init();
 		IBoardView view = new BoardTextView(model, System.out);
 		BoardController controller = new BoardController(model, view);
-		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));
-		controller.setPlayer2(new SingleTurnLookAheadPlayer(PlayerType.TWO, controller));
+		controller.setPlayer1(new SingleTurnLookAheadPlayer(PlayerType.ONE, controller));
+		controller.setPlayer2(new RandomPlayer(PlayerType.TWO, controller));
 		controller.run();
 	}
 }
