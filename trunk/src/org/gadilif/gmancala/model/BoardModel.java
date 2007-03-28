@@ -48,7 +48,11 @@ public class BoardModel {
 		int cell = start;
 		if (cells[start] == 0) return true;
 		while (cells[start] > 0) {
-			incrementCell((++cell)%14);
+			cell++;
+			cell %= 14;
+			if ((start < 7) && (cell == 0)) continue;
+			if ((start > 7) && (cell == 7)) continue;
+			incrementCell(cell);
 			decrementCell(start);
 		}
 		cell %= 14;
@@ -58,7 +62,7 @@ public class BoardModel {
 					capture(cell, RIGHT_HOLE);
 				}
 			}
-			else { //start >7
+			else { //start > 7
 				if (cell > 7) {
 					capture(cell, LEFT_HOLE);
 				} 
@@ -78,14 +82,9 @@ public class BoardModel {
 		setCellValue(i, cells[i]-1);
 	}
 	
-	private boolean isRowAllZero(int start, int end) {
-		for (int i=start;i<end;i++) {
-			if (cells[i] > 0) return false;
-		}
-		return true;
-	}
+	
 	public boolean isGameOver() {
-		return isRowAllZero(1,7) || isRowAllZero(8,14);
+		return (getRowSum(1,7) == 0) || (getRowSum(8,14) == 0);
 		
 	}
 

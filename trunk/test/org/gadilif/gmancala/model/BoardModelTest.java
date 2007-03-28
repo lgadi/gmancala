@@ -47,6 +47,23 @@ public class BoardModelTest {
 	}
 	
 	@Test
+	public void doNotFillOtherHole() {
+		board.play(9);
+		//board.play(8);
+		board.play(1);
+		board.play(6);
+	
+		board.play(8);
+		board.play(12);
+		board.play(11);
+		board.play(10);
+		boardView.draw();
+		board.play(13);
+		boardView.draw();
+		assertEquals(1, board.getRightHoleValue());
+	}
+	
+	@Test
 	public void consecutivePlays() {
 		board.play(4);
 		assertEquals(1, board.getRightHoleValue());
