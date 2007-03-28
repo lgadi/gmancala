@@ -130,17 +130,17 @@ public class BoardModel {
 	private int getRowSum(final int start, final int end) {
 		int sum = 0;
 		for (int i=start;i<end;i++) {
-			sum += cells[i];
+			sum += cells[i%14];
 		}
 		return sum;
 	}
 	
 	public int getPlayer1Score() {
-		return getRowSum(0,7);
+		return getRowSum(1,8);
 	}
 	
 	public int getPlayer2Score() {
-		return getRowSum(7, 14);
+		return getRowSum(8, 15);
 	}
 	public PlayerType getWinner() {
 		return (getPlayer1Score() > getPlayer2Score())?PlayerType.ONE:PlayerType.TWO;
