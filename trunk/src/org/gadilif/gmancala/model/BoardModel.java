@@ -29,29 +29,35 @@ public class BoardModel {
 		return this.initialized;
 	}
 
-	public int getCellValue(int i) {
+	public int getCellValue(final int i) {
 		return cells[i];
 	}
 
-	private boolean isHole(int cell) {
+	private boolean isHole(final int cell) {
 		return ((cell == LEFT_HOLE) || (cell == RIGHT_HOLE));
 	}
 	
-	private void capture(int cell, int hole) {
+	private void capture(final int cell, final int hole) {
 		if (cells[14-cell] > 0) {
 			setCellValue(hole, cells[hole]+cells[14-cell]+1);
 			setCellValue(cell,0);
 			setCellValue(14-cell,0);
 		}
 	}
-	public boolean play(int start) {
+	public boolean play(final int start) {
 		int cell = start;
-		if (cells[start] == 0) return true;
+		if (cells[start] == 0) {
+			return true;
+		}
 		while (cells[start] > 0) {
 			cell++;
 			cell %= 14;
-			if ((start < 7) && (cell == 0)) continue;
-			if ((start > 7) && (cell == 7)) continue;
+			if ((start < 7) && (cell == 0)) {
+				continue;
+			}
+			if ((start > 7) && (cell == 7)) {
+				continue;
+			}
 			incrementCell(cell);
 			decrementCell(start);
 		}
@@ -73,12 +79,12 @@ public class BoardModel {
 	}
 	
 	
-	private void incrementCell(int i) {
+	private void incrementCell(final int i) {
 		setCellValue(i, cells[i]+1);
 		
 	}
 	
-	private void decrementCell(int i) {
+	private void decrementCell(final int i) {
 		setCellValue(i, cells[i]-1);
 	}
 	
@@ -88,7 +94,7 @@ public class BoardModel {
 		
 	}
 
-	public void setCellValue(int cell, int value) {
+	public void setCellValue(final int cell, final int value) {
 		cells[cell] = value;
 		for (ICellChangedListener listener : cellChangedListeners) {
 			listener.cellChanged(cell, value);
@@ -104,7 +110,7 @@ public class BoardModel {
 		return cells[LEFT_HOLE];
 	}
 
-	public boolean canPlay(int i) {
+	public boolean canPlay(final int i) {
 		return cells[i] > 0;
 	}
 	
@@ -116,12 +122,12 @@ public class BoardModel {
 		return LEFT_HOLE;
 	}
 
-	public void addCellChangedListener(ICellChangedListener listener) {
+	public void addCellChangedListener(final ICellChangedListener listener) {
 		cellChangedListeners.add(listener);
 		
 	}
 
-	private int getRowSum(int start, int end) {
+	private int getRowSum(final int start, final int end) {
 		int sum = 0;
 		for (int i=start;i<end;i++) {
 			sum += cells[i];
