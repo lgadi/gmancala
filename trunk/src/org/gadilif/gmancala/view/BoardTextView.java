@@ -33,7 +33,7 @@ public class BoardTextView implements IBoardView {
 	/* (non-Javadoc)
 	 * @see org.gadilif.gmancala.view.IBoardView#draw()
 	 */
-	public void draw() {
+	public void refresh() {
 		out.println("Board:");
 		String separator = "+---+---+---+---+---+---+";
 		out.println("   "+separator+"   ");

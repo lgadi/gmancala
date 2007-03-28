@@ -57,9 +57,9 @@ public class BoardModelTest {
 		board.play(12);
 		board.play(11);
 		board.play(10);
-		boardView.draw();
+		boardView.refresh();
 		board.play(13);
-		boardView.draw();
+		boardView.refresh();
 		assertEquals(1, board.getRightHoleValue());
 	}
 	
