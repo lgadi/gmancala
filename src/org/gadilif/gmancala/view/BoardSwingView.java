@@ -33,6 +33,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 	protected void makebutton(JPanel hostingPanel, String name, int i, GridBagLayout gridbag,	GridBagConstraints c, int x, int y, int width, int height) {
 		
 		JButton button = new JButton("button "+i);
+		
 		buttonList.add(button);
 		c.gridx = x;
 		c.gridy = y;
@@ -43,6 +44,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		gridbag.setConstraints(button, c);
 	
 		hostingPanel.add(button);
+		System.out.println(button.getGraphics());
 	}
 
 	JTextArea debugTextArea = new JTextArea();
