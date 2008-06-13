@@ -160,12 +160,16 @@ public class BoardSwingView extends JFrame implements IBoardView {
 
 
 	public int getPlay(PlayerType playerType) {	
-		return waitForPlay();
+		return waitForPlay(playerType);
 	}
 
 
-	private int waitForPlay() {
-		for (int i=1;i<7;i++) {
+	private int waitForPlay(PlayerType playerType) {
+		int start = 1;
+		if (playerType == PlayerType.TWO) {
+			start = 8;
+		}
+		for (int i=start;i<start+6;i++) {
 			buttonList.get(i).setEnabled(true);
 		}
 		synchronized (playLock) {
@@ -176,7 +180,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 				e.printStackTrace();
 			}
 		}
-		for (int i=1;i<7;i++) {
+		for (int i=start;i<start+6;i++) {
 			buttonList.get(i).setEnabled(false);
 		}
 		return play;
