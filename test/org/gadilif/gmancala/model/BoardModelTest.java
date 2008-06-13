@@ -1,6 +1,8 @@
 package org.gadilif.gmancala.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.gadilif.gmancala.view.BoardTextView;
 import org.gadilif.gmancala.view.IBoardView;
@@ -16,7 +18,7 @@ public class BoardModelTest {
 	public void init() {
 		board = new BoardModel();
 		board.init();
-		boardView = new BoardTextView(board, System.out);
+		boardView = new BoardTextView(board);
 	}
 	
 	@Test

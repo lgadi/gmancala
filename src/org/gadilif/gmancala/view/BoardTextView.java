@@ -10,12 +10,12 @@ import org.gadilif.gmancala.model.PlayerType;
 
 public class BoardTextView implements IBoardView {
 
-	private PrintStream out;
+	private PrintStream out = System.out;
 	
 	private BoardModel boardModel;
-	public BoardTextView(final BoardModel boardModel, final PrintStream out) {
+	public BoardTextView(final BoardModel boardModel) {
 		this.boardModel = boardModel;
-		this.out = out;
+		
 	}
 
 	
