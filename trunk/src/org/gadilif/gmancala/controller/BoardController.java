@@ -37,10 +37,12 @@ public class BoardController {
 		return (cell >= player.getStart() && cell < player.getEnd());
 	}
 	private boolean singleMove(IPlayerStrategy player) {
+		view.debug("Player "+player.getPlayer()+": ");
 		int cell = player.play();
 		while (!isValidSelection(cell, player.getPlayer())) {
 			cell = player.play();
 		}
+		view.debug("Moved from cell "+cell);
 		int target = play(cell);
 		return ((target == -1) || (target == player.getPlayer().getHome()));
 	}
