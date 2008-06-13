@@ -88,4 +88,10 @@ public class BoardTextView implements IBoardView {
 		return -1;
 	}
 
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
