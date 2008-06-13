@@ -1,6 +1,7 @@
 package org.gadilif.gmancala.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -81,7 +82,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		
 			public void windowClosed(WindowEvent e) {
 				System.out.println("Window closed");
-				System.exit(0);
+				//System.exit(0);
 			}
 		
 			public void windowActivated(WindowEvent e) {
@@ -132,21 +133,19 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		
 		
 		setSize(700, 300);
-		JScrollPane debugPanel = new JScrollPane(debugTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		//c.gridheight = GridBagConstraints.REMAINDER;
-		//c.gridheight = GridBagConstraints.REMAINDER;
+		debugTextArea.setAutoscrolls(true);
+		JScrollPane debugPanel = new JScrollPane(debugTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		debugPanel.setPreferredSize(new Dimension(0,0));
 		c.gridheight = 1;
 		c.gridwidth = 8;
+		c.weighty = 1;
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 2;
+		c.fill = GridBagConstraints.BOTH;
 		gridbag.setConstraints(debugPanel, c);
 		mainPanel.add(debugPanel);
 		getContentPane().add(mainPanel, BorderLayout.CENTER);
-		
-		//debugPanel.setPreferredSize(new Dimension(700,100));
-		//debugTextArea.setPreferredSize(new Dimension(700,100));
-		
-		//getContentPane().add(debugPanel, BorderLayout.SOUTH);
 	}
 
 
@@ -156,6 +155,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 	public void debug(String message) {
 		debugTextArea.append(message+"\n");
 		debugTextArea.setCaretPosition(debugTextArea.getText().length());
+		
 	}
 
 
@@ -164,14 +164,25 @@ public class BoardSwingView extends JFrame implements IBoardView {
 	}
 
 
+	private void setButtonsState(final boolean state, final int start) {
+		SwingUtilities.invokeLater(new Runnable(){
+		
+			public void run() {
+				for (int i=start;i<start+6;i++) {
+					buttonList.get(i).setEnabled(state);
+				}
+			}
+		
+		});
+		
+		
+	}
 	private int waitForPlay(PlayerType playerType) {
 		int start = 1;
 		if (playerType == PlayerType.TWO) {
 			start = 8;
 		}
-		for (int i=start;i<start+6;i++) {
-			buttonList.get(i).setEnabled(true);
-		}
+		setButtonsState(true, start);
 		synchronized (playLock) {
 			try {
 				playLock.wait();
@@ -180,9 +191,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 				e.printStackTrace();
 			}
 		}
-		for (int i=start;i<start+6;i++) {
-			buttonList.get(i).setEnabled(false);
-		}
+			setButtonsState(false, start);
 		return play;
 	}
 

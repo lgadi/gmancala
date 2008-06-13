@@ -20,11 +20,5 @@ public class BoardControllerTest {
 		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));
 		controller.setPlayer2(new HumanPlayer(PlayerType.TWO, controller));
 		controller.run();
-		try {
-			Thread.sleep(100000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
