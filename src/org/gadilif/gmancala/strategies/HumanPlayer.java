@@ -13,7 +13,6 @@ public class HumanPlayer extends AbstractPlayer {
 	@Override
 	public int play() {
 		return controller.getView().getPlay(player);
-		
 	}
 
 }
