@@ -1,13 +1,13 @@
 package org.gadilif.gmancala.view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +16,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import org.gadilif.gmancala.model.BoardModel;
 import org.gadilif.gmancala.model.PlayerType;
-
-import com.sun.corba.se.impl.ior.iiop.JavaSerializationComponent;
 
 public class BoardSwingView extends JFrame implements IBoardView {
 
@@ -38,11 +37,18 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		c.gridy = y;
 		c.gridheight = height;
 		c.gridwidth = width;
+		button.setEnabled(false);
+		button.addActionListener(new PlayActionListener(i));
 		gridbag.setConstraints(button, c);
+	
 		hostingPanel.add(button);
 	}
 
 	JTextArea debugTextArea = new JTextArea();
+
+	Object playLock = new Object();
+
+	int play = -1;
 	
 	public BoardSwingView(BoardModel model) {
 		super();
@@ -126,9 +132,9 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		
 		
 		setSize(700, 300);
-		JScrollPane debugPanel = new JScrollPane(debugTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		c.gridheight = GridBagConstraints.REMAINDER;
-		c.gridheight = GridBagConstraints.REMAINDER;
+		JScrollPane debugPanel = new JScrollPane(debugTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//c.gridheight = GridBagConstraints.REMAINDER;
+		//c.gridheight = GridBagConstraints.REMAINDER;
 		c.gridheight = 1;
 		c.gridwidth = 8;
 		c.gridx = 0;
@@ -153,10 +159,28 @@ public class BoardSwingView extends JFrame implements IBoardView {
 	}
 
 
-	public int getPlay(PlayerType playerType) {
-		return 0;
+	public int getPlay(PlayerType playerType) {	
+		return waitForPlay();
 	}
 
+
+	private int waitForPlay() {
+		for (int i=1;i<7;i++) {
+			buttonList.get(i).setEnabled(true);
+		}
+		synchronized (playLock) {
+			try {
+				playLock.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for (int i=1;i<7;i++) {
+			buttonList.get(i).setEnabled(false);
+		}
+		return play;
+	}
 
 	public void refresh() {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -176,4 +200,17 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		}
 	}
 	
+	private class PlayActionListener implements ActionListener {
+		private int index;
+		public PlayActionListener(int index) {
+			this.index = index;
+		}
+		public void actionPerformed(ActionEvent e) {
+			synchronized(playLock) {
+				play = index;
+				playLock.notify();
+			}
+		}
+		
+	}
 }
