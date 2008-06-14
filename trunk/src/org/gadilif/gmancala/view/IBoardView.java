@@ -13,4 +13,6 @@ public interface IBoardView {
 
 	void setVisible(boolean b);
 
+	void init();
+
 }
