@@ -7,8 +7,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ import org.gadilif.gmancala.model.PlayerType;
 import org.gadilif.gmancala.strategies.HumanPlayer;
 import org.gadilif.gmancala.strategies.SingleTurnLookAheadPlayer;
 
-public class BoardAppletView extends JApplet {
+public class BoardAppletView extends JApplet implements IBoardView {
 
 	
 	@Override
@@ -100,13 +98,14 @@ public class BoardAppletView extends JApplet {
 		mainPanel.add(debugPanel);
 		getContentPane().add(mainPanel, BorderLayout.CENTER);
 		
-		IBoardView view = new BoardSwingView(model);
-		view.setVisible(true);
-		BoardController controller = new BoardController(model, view);
+//		IBoardView view = new BoardSwingView(model);
+		setVisible(true);
+		BoardController controller = new BoardController(model, this);
 		//controller.setPlayer1(new SingleTurnLookAheadPlayer(PlayerType.ONE, controller));
 		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));
 		controller.setPlayer2(new SingleTurnLookAheadPlayer(PlayerType.TWO, controller));
 		controller.run();
+		
 		
 	}
 
@@ -140,7 +139,6 @@ public class BoardAppletView extends JApplet {
 		gridbag.setConstraints(button, c);
 	
 		hostingPanel.add(button);
-		System.out.println(button.getGraphics());
 	}
 
 	JTextArea debugTextArea = new JTextArea();
