@@ -13,71 +13,59 @@ public class BoardSwingView extends JFrame implements IBoardView {
 	private static final long serialVersionUID = 1L;
 
 	protected BoardModel model;
-	
+
 	ViewDelegate viewDelegate;
 
 	public BoardSwingView(BoardModel model) {
 		this.model = model;
 	}
 
-	private void init0() {
+	public void init() {
 		viewDelegate = new ViewDelegate(model);
 		viewDelegate.createComponents(this.getContentPane());
 		setSize(700, 300);
-	}
-	
-	public void init() {
-		init0();
-		viewInit();
-	}
-	
-	public void debug(String message) {
-		viewDelegate.debug(message);
-		
-	}
-
-	public int getPlay(PlayerType playerType) {
-		return viewDelegate.waitForPlay(playerType);
-	}
-
-
-	public void refresh() {
-		viewDelegate.refresh();
-	}
-	
-	public void viewInit() {
 		this.addWindowListener(new WindowListener() {
-			
+
 			public void windowOpened(WindowEvent e) {
 				// TODO Auto-generated method stub
 			}
-	
+
 			public void windowIconified(WindowEvent e) {
 				// TODO Auto-generated method stub
 			}
-	
+
 			public void windowDeiconified(WindowEvent e) {
 				// TODO Auto-generated method stub
 			}
-	
+
 			public void windowDeactivated(WindowEvent e) {
 				// TODO
 			}
-	
+
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Window closing");
 				System.exit(0);
 			}
-	
+
 			public void windowClosed(WindowEvent e) {
 				System.out.println("Window closed");
 			}
-	
+
 			public void windowActivated(WindowEvent e) {
 				// TODO Auto-generated method stub
 			}
 		});
 	}
 
-	
+	public void debug(String message) {
+		viewDelegate.debug(message);
+	}
+
+	public int getPlay(PlayerType playerType) {
+		return viewDelegate.waitForPlay(playerType);
+	}
+
+	public void refresh() {
+		viewDelegate.refresh();
+	}
 }
