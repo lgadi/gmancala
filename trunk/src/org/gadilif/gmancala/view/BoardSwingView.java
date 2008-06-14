@@ -3,18 +3,48 @@ package org.gadilif.gmancala.view;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import org.gadilif.gmancala.model.BoardModel;
+import javax.swing.JFrame;
 
-public class BoardSwingView extends AbstractBoardView implements IBoardView {
+import org.gadilif.gmancala.model.BoardModel;
+import org.gadilif.gmancala.model.PlayerType;
+
+public class BoardSwingView extends JFrame implements IBoardView {
 
 	private static final long serialVersionUID = 1L;
 
+	protected BoardModel model;
+	
+	ViewDelegate viewDelegate;
+
 	public BoardSwingView(BoardModel model) {
-		super();
 		this.model = model;
 	}
+
+	private void init0() {
+		viewDelegate = new ViewDelegate(model);
+		viewDelegate.createComponents(this.getContentPane());
+		setSize(700, 300);
+	}
 	
-	@Override
+	public void init() {
+		init0();
+		viewInit();
+	}
+	
+	public void debug(String message) {
+		viewDelegate.debug(message);
+		
+	}
+
+	public int getPlay(PlayerType playerType) {
+		return viewDelegate.waitForPlay(playerType);
+	}
+
+
+	public void refresh() {
+		viewDelegate.refresh();
+	}
+	
 	public void viewInit() {
 		this.addWindowListener(new WindowListener() {
 			

@@ -27,6 +27,10 @@ import org.gadilif.gmancala.strategies.SingleTurnLookAheadPlayer;
 public class BoardAppletView extends JApplet implements IBoardView {
 
 	
+	JTextArea debugTextArea = new JTextArea();
+	Object playLock = new Object();
+	int play = -1;
+	
 	@Override
 	public void destroy() {
 		super.destroy();
@@ -40,7 +44,6 @@ public class BoardAppletView extends JApplet implements IBoardView {
 		System.out.println("init");
 		model = new BoardModel();
 		model.init();
-	
 		
 		getContentPane().setLayout(new BorderLayout());
 		JPanel mainPanel = new JPanel();
@@ -49,14 +52,10 @@ public class BoardAppletView extends JApplet implements IBoardView {
 
 		mainPanel.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		mainPanel.setLayout(gridbag);
-		
-		
 
 		c.fill = GridBagConstraints.BOTH;
 		c.weighty = 1.0;
 		c.weightx = 1.0;
-		
-	
 		c.gridwidth = 1; 
 		c.gridheight = 2;	
 		int i = 0;
@@ -82,7 +81,6 @@ public class BoardAppletView extends JApplet implements IBoardView {
 			makebutton(mainPanel, "Button", i, gridbag, c, ROW_LEN-(i-ROW_LEN-2), 0, 1, 1);
 		}
 		
-		
 		setSize(700, 300);
 		debugTextArea.setAutoscrolls(true);
 		JScrollPane debugPanel = new JScrollPane(debugTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -98,15 +96,12 @@ public class BoardAppletView extends JApplet implements IBoardView {
 		mainPanel.add(debugPanel);
 		getContentPane().add(mainPanel, BorderLayout.CENTER);
 		
-//		IBoardView view = new BoardSwingView(model);
 		setVisible(true);
 		BoardController controller = new BoardController(model, this);
 		//controller.setPlayer1(new SingleTurnLookAheadPlayer(PlayerType.ONE, controller));
 		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));
 		controller.setPlayer2(new SingleTurnLookAheadPlayer(PlayerType.TWO, controller));
 		controller.run();
-		
-		
 	}
 
 	@Override
@@ -126,9 +121,7 @@ public class BoardAppletView extends JApplet implements IBoardView {
 	private static final long serialVersionUID = 1L;
 	final static int ROW_LEN = 6;
 	protected void makebutton(JPanel hostingPanel, String name, int i, GridBagLayout gridbag,	GridBagConstraints c, int x, int y, int width, int height) {
-		
 		JButton button = new JButton("button "+i);
-		
 		buttonList.add(button);
 		c.gridx = x;
 		c.gridy = y;
@@ -137,33 +130,17 @@ public class BoardAppletView extends JApplet implements IBoardView {
 		button.setEnabled(false);
 		button.addActionListener(new PlayActionListener(i));
 		gridbag.setConstraints(button, c);
-	
 		hostingPanel.add(button);
 	}
-
-	JTextArea debugTextArea = new JTextArea();
-
-	Object playLock = new Object();
-
-	int play = -1;
-	
-	
-	
-
-	
-
 
 	public void debug(String message) {
 		debugTextArea.append(message+"\n");
 		debugTextArea.setCaretPosition(debugTextArea.getText().length());
-		
 	}
-
 
 	public int getPlay(PlayerType playerType) {	
 		return waitForPlay(playerType);
 	}
-
 
 	private void setButtonsState(final boolean state, final int start) {
 		SwingUtilities.invokeLater(new Runnable(){
@@ -175,8 +152,6 @@ public class BoardAppletView extends JApplet implements IBoardView {
 			}
 		
 		});
-		
-		
 	}
 	private int waitForPlay(PlayerType playerType) {
 		int start = 1;
