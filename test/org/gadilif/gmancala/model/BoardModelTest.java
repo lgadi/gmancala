@@ -19,6 +19,7 @@ public class BoardModelTest {
 		board = new BoardModel();
 		board.init();
 		boardView = new BoardTextView(board);
+		boardView.init();
 	}
 	
 	@Test

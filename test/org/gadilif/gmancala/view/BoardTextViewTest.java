@@ -20,6 +20,7 @@ public class BoardTextViewTest {
 		boardModel = new BoardModel();
 		boardModel.init();
 		boardTextView = new BoardTextView(boardModel);
+		boardTextView.init();
 	}
 
 	private class MyPrintStream extends PrintStream {

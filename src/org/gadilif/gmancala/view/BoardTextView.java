@@ -94,4 +94,10 @@ public class BoardTextView implements IBoardView {
 		
 	}
 
+
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
