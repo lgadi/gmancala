@@ -14,15 +14,22 @@ public class BoardModel {
 	int[] cells = new int[MAX_CELLS];
 	private boolean initialized;
 	private List<ICellChangedListener> cellChangedListeners;
-	
-	public void init() {
-		for (int i=0;i<MAX_CELLS;i++) {
-			cells[i] = INITIAL_CELL_COUNT;
-		}
-		cells[TWO.getHome()] = 0;
-		cells[ONE.getHome()] = 0;
+	private List<IModelResetListener> modelResetListeners;
+	public BoardModel() {
 		cellChangedListeners = new ArrayList<ICellChangedListener>();
+		modelResetListeners = new ArrayList<IModelResetListener>();
+	}
+	public void init() {
+		resetBoard();
 		this.initialized = true;
+	}
+
+	private void resetBoard() {
+		for (int i=0;i<MAX_CELLS;i++) {
+			setCellValue(i, INITIAL_CELL_COUNT);
+		}
+		setCellValue(TWO.getHome(), 0);
+		setCellValue(ONE.getHome(), 0);
 	}
 
 	public boolean isInitialized() {
@@ -124,7 +131,11 @@ public class BoardModel {
 
 	public void addCellChangedListener(final ICellChangedListener listener) {
 		cellChangedListeners.add(listener);
+	}
+	
+	public void addModelResetListener(final IModelResetListener listener) {
 		
+		modelResetListeners.add(listener);
 	}
 
 	private int getRowSum(final int start, final int end) {
@@ -145,6 +156,13 @@ public class BoardModel {
 	
 	public PlayerType getWinner() {
 		return (getPlayerScore(ONE) > getPlayerScore(TWO))?ONE:TWO;
+	}
+
+	public void reset() {
+		resetBoard();
+		for (IModelResetListener listener:modelResetListeners) {
+			listener.modelReset();
+		}
 	}
 
 }

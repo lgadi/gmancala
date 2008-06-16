@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,8 +23,9 @@ import javax.swing.SwingUtilities;
 
 import org.gadilif.gmancala.model.BoardModel;
 import org.gadilif.gmancala.model.PlayerType;
+import org.gadilif.gmancala.view.listeners.ICellChangedListener;
 
-public class ViewDelegate {
+public class ViewDelegate implements ICellChangedListener {
 
 	protected Object playLock = new Object();
 	protected int play = -1;
@@ -32,6 +36,7 @@ public class ViewDelegate {
 
 	public ViewDelegate(BoardModel model) {
 		this.model = model;
+		model.addCellChangedListener(this);
 	}
 
 	private void makebutton(JPanel hostingPanel, String name, int i,
@@ -105,7 +110,34 @@ public class ViewDelegate {
 		c.fill = GridBagConstraints.BOTH;
 		gridbag.setConstraints(debugPanel, c);
 		mainPanel.add(debugPanel);
+		createMenu(container);
 		container.add(mainPanel, BorderLayout.CENTER);
+	}
+
+	private void createMenu(Container container) {
+		JMenuBar menuBar = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		JMenuItem exitItem = new JMenuItem("Exit");
+		exitItem.addActionListener(new ActionListener() {		
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		JMenuItem restartItem = new JMenuItem("Restart");
+		restartItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				model.reset();
+				synchronized(playLock) {
+					playLock.notify();
+				}
+			}
+		});
+		fileMenu.add(restartItem);
+		fileMenu.addSeparator();
+		fileMenu.add(exitItem);
+		menuBar.add(fileMenu);
+		container.add(menuBar, BorderLayout.NORTH);
 	}
 
 	public void debug(String message) {
@@ -115,13 +147,11 @@ public class ViewDelegate {
 
 	private void setButtonsState(final boolean state, final int start) {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			public void run() {
 				for (int i = start; i < start + 6; i++) {
 					buttonList.get(i).setEnabled(state);
 				}
 			}
-
 		});
 	}
 
@@ -160,7 +190,6 @@ public class ViewDelegate {
 
 	public void refresh() {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			public void run() {
 				for (int i = 0; i < buttonList.size(); i++) {
 					buttonList.get(i).setText("" + model.getCellValue(i));
@@ -168,11 +197,14 @@ public class ViewDelegate {
 			}
 		});
 		try {
-			Thread.sleep(200);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+	}
+
+	public void cellChanged(int cellId, int newValue) {
+		refresh();
 	}
 
 }

@@ -1,32 +1,35 @@
 package org.gadilif.gmancala.controller;
 
 import org.gadilif.gmancala.model.BoardModel;
+import org.gadilif.gmancala.model.IModelResetListener;
 import org.gadilif.gmancala.model.PlayerType;
 import org.gadilif.gmancala.strategies.IPlayerStrategy;
 import org.gadilif.gmancala.view.IBoardView;
 
-public class BoardController {
+public class BoardController implements IModelResetListener {
 
 	
 	private BoardModel model;
 
 	private IBoardView view;
 
-	private IPlayerStrategy player1;
-
-	private IPlayerStrategy player2;
+	private IPlayerStrategy[] players;
+	
+	private int play = 0;
 
 	public BoardController(final BoardModel model, final IBoardView view) {
 		this.model = model;
 		this.view = view;
+		players = new IPlayerStrategy[2];
+		model.addModelResetListener(this);
 	}
 
 	public void setPlayer1(final IPlayerStrategy player) {
-		this.player1 = player;
+		this.players[0] = player;
 	}
 
 	public void setPlayer2(final IPlayerStrategy player) {
-		this.player2 = player;
+		this.players[1] = player;
 	}
 
 	public int play(final int cell) {
@@ -38,9 +41,13 @@ public class BoardController {
 	}
 	private boolean singleMove(IPlayerStrategy player) {
 		view.debug("Player "+player.getPlayer()+": ");
-		int cell = player.play();
+		int cell = -1;
 		while (!isValidSelection(cell, player.getPlayer())) {
 			cell = player.play();
+			if (play < 0) {
+				play = 0;
+				return false;
+			}
 		}
 		view.debug("Moved from cell "+cell);
 		int target = play(cell);
@@ -58,10 +65,7 @@ public class BoardController {
 	}
 	public void run() {
 		while (!model.isGameOver()) {
-			doPlay(player1);
-			if (!model.isGameOver()) {
-				doPlay(player2);
-			}
+			doPlay(players[Math.abs((play++)%2)]);
 		}
 		view.debug("Player 1 score: "
 				+ model.getPlayerScore(PlayerType.ONE));
@@ -85,6 +89,11 @@ public class BoardController {
 
 	public void setView(IBoardView view) {
 		this.view = view;
+	}
+
+	public void modelReset() {
+		play = -2;
+		view.refresh();
 	}
 
 }

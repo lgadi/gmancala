@@ -13,18 +13,13 @@ public class BoardAppletView extends JApplet implements IBoardView {
 	private static final long serialVersionUID = 1L;
 	ViewDelegate viewDelegate;
 	
-	@Override
-	public void destroy() {
-		super.destroy();
-		System.out.println("destroy");
-	}
 
 	BoardModel model = null;
+
 	@Override
 	public void init() {
 		super.init();
 		System.out.println("init");
-		
 		model = new BoardModel();
 		model.init();
 		viewDelegate = new ViewDelegate(model);
@@ -35,6 +30,12 @@ public class BoardAppletView extends JApplet implements IBoardView {
 		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));
 		controller.setPlayer2(new SingleTurnLookAheadPlayer(PlayerType.TWO, controller));
 		controller.run();
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+		System.out.println("destroy");
 	}
 
 	@Override
