@@ -24,6 +24,7 @@ public class BoardSwingView extends JFrame implements IBoardView {
 		viewDelegate = new ViewDelegate(model);
 		viewDelegate.createComponents(this.getContentPane());
 		setSize(700, 300);
+		setVisible(true);
 		this.addWindowListener(new WindowListener() {
 
 			public void windowOpened(WindowEvent e) {

@@ -16,7 +16,6 @@ public class BoardControllerTest {
 	
 		IBoardView view = new BoardSwingView(model);
 		view.init();
-		view.setVisible(true);
 		BoardController controller = new BoardController(model, view);
 		//controller.setPlayer1(new SingleTurnLookAheadPlayer(PlayerType.ONE, controller));
 		controller.setPlayer1(new HumanPlayer(PlayerType.ONE, controller));

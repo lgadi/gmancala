@@ -11,8 +11,5 @@ public interface IBoardView {
 	
 	int getPlay(PlayerType playerType);
 
-	void setVisible(boolean b);
-
 	void init();
-
 }
