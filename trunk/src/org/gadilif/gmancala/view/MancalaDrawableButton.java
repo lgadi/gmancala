@@ -12,7 +12,7 @@ public class MancalaDrawableButton extends JButton {
 	private static final long serialVersionUID = 1L;
 	private int numberOfBalls;
 	private List<XYC> xyc = new ArrayList<XYC>();
-	private Color[] colors = new Color[]{Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.WHITE, Color.RED, Color.PINK, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW};
+	private Color[] colors = new Color[]{Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.RED, Color.RED, Color.PINK, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW};
 	private static List<Color> balls = new ArrayList<Color>();
 	
 		
@@ -40,14 +40,12 @@ public class MancalaDrawableButton extends JButton {
 		if (delta > 0) {
 		for (int i=0;i<delta;i++) {
 			Color c = balls.remove(0);
-			System.out.println("using color "+c);
 			xyc.add(new XYC((int)(midX-midX/2+Math.random()*midX), (int)(midY-midY/2+Math.random()*midY/2), c));
 		}
 		}
 		else {
 			for (int i=0;i>delta;i--) {
 				Color c = xyc.remove(0).c;
-				System.out.println("removing color "+c);
 				balls.add(0, c);
 			}
 		}
@@ -55,18 +53,18 @@ public class MancalaDrawableButton extends JButton {
 
 	
 	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Color old = g.getColor();
+	public void paint(Graphics g) {
+		super.paint(g);
+		Color oldColor = g.getColor();
 		
 		for (XYC pos:xyc) {
 			g.setColor(pos.c);
-			g.fillOval(pos.x, pos.y, 15, 15);
+			g.fillRoundRect(pos.x, pos.y, 20, 15, 15, 15);
 		}
 		
-		g.setColor(Color.BLACK);
-		g.drawString(xyc.size()+"", getWidth()/2, getHeight()-20);
-		g.setColor(old);
+		g.setColor(Color.RED);
+		g.drawString(xyc.size()+"", getWidth()/2, getHeight()-10);
+		g.setColor(oldColor);
 		
 	}
 	
