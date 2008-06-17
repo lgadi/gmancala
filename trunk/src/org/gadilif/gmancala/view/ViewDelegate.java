@@ -29,7 +29,7 @@ public class ViewDelegate implements ICellChangedListener {
 
 	protected Object playLock = new Object();
 	protected int play = -1;
-	List<JButton> buttonList = new ArrayList<JButton>();
+	List<MancalaDrawableButton> buttonList = new ArrayList<MancalaDrawableButton>();
 	static final int ROW_LEN = 6;
 	JTextArea debugTextArea = new JTextArea();
 	BoardModel model;
@@ -43,8 +43,8 @@ public class ViewDelegate implements ICellChangedListener {
 			GridBagLayout gridbag, GridBagConstraints c, int x, int y,
 			int width, int height) {
 
-		JButton button = new JButton("button " + i);
-
+		MancalaDrawableButton button = new MancalaDrawableButton(""+i);
+		//button.setNumberOfBalls(4);
 		buttonList.add(button);
 		c.gridx = x;
 		c.gridy = y;
@@ -192,6 +192,7 @@ public class ViewDelegate implements ICellChangedListener {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				for (int i = 0; i < buttonList.size(); i++) {
+					buttonList.get(i).setNumberOfBalls(model.getCellValue(i));
 					buttonList.get(i).setText("" + model.getCellValue(i));
 				}
 			}
