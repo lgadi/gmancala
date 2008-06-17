@@ -12,11 +12,14 @@ public class MancalaDrawableButton extends JButton {
 	private static final long serialVersionUID = 1L;
 	private int numberOfBalls;
 	private List<XYC> xyc = new ArrayList<XYC>();
-	Color[] colors = new Color[]{Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.WHITE, Color.RED, Color.PINK, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW};
+	private Color[] colors = new Color[]{Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.WHITE, Color.RED, Color.PINK, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW};
+	private static List<Color> balls = new ArrayList<Color>();
 	
 		
 	public MancalaDrawableButton(String string) {
-	//	super(string);
+		for (int i=0;i<48;i++) {
+			balls.add(colors[(int)(Math.random()*10)]);
+		}
 	}
 
 	@Override
@@ -36,12 +39,16 @@ public class MancalaDrawableButton extends JButton {
 		int midY = getHeight()/2;
 		if (delta > 0) {
 		for (int i=0;i<delta;i++) {
-			xyc.add(new XYC((int)(midX-midX/2+Math.random()*midX), (int)(midY-midY/2+Math.random()*midY/2), colors[(int)(Math.random()*10)]));
+			Color c = balls.remove(0);
+			System.out.println("using color "+c);
+			xyc.add(new XYC((int)(midX-midX/2+Math.random()*midX), (int)(midY-midY/2+Math.random()*midY/2), c));
 		}
 		}
 		else {
 			for (int i=0;i>delta;i--) {
-				xyc.remove(0);
+				Color c = xyc.remove(0).c;
+				System.out.println("removing color "+c);
+				balls.add(0, c);
 			}
 		}
 	}
@@ -52,7 +59,6 @@ public class MancalaDrawableButton extends JButton {
 		super.paintComponent(g);
 		Color old = g.getColor();
 		
-		System.out.println(getX()+", "+getY());
 		for (XYC pos:xyc) {
 			g.setColor(pos.c);
 			g.fillOval(pos.x, pos.y, 15, 15);
