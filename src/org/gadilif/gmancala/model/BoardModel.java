@@ -102,9 +102,11 @@ public class BoardModel {
 	}
 
 	public void setCellValue(final int cell, final int value) {
-		cells[cell] = value;
-		for (ICellChangedListener listener : cellChangedListeners) {
-			listener.cellChanged(cell, value);
+		if (cells[cell] != value) {
+			cells[cell] = value;
+			for (ICellChangedListener listener : cellChangedListeners) {
+				listener.cellChanged(cell, value);
+			}
 		}
 	}
 	
