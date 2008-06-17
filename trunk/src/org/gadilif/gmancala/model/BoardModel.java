@@ -65,8 +65,9 @@ public class BoardModel {
 			if ((start > TWO.getStart()) && (cell == ONE.getHome())) {
 				continue;
 			}
-			incrementCell(cell);
 			decrementCell(start);
+			incrementCell(cell);
+			
 		}
 		cell %= MAX_CELLS;
 		if (!isHole(cell) && (cells[cell] == 1)) {
