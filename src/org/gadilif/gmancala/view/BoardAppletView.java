@@ -32,6 +32,10 @@ public class BoardAppletView extends JApplet implements IBoardView {
 		controller.run();
 	}
 
+	public int getPlay(PlayerType playerType) {	
+		return viewDelegate.waitForPlay(playerType);
+	}
+
 	@Override
 	public void destroy() {
 		super.destroy();
@@ -53,10 +57,6 @@ public class BoardAppletView extends JApplet implements IBoardView {
 
 	public void debug(String message) {
 		viewDelegate.debug(message);
-	}
-
-	public int getPlay(PlayerType playerType) {	
-		return viewDelegate.waitForPlay(playerType);
 	}
 
 	public void refresh() {
