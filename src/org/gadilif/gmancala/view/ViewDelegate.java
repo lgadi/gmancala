@@ -24,6 +24,11 @@ import org.gadilif.gmancala.model.BoardModel;
 import org.gadilif.gmancala.model.PlayerType;
 import org.gadilif.gmancala.view.listeners.ICellChangedListener;
 
+/**
+ * Does all the view operations, for testing purposes this is the separation.
+ * @author Gadi
+ *
+ */
 public class ViewDelegate implements ICellChangedListener {
 
 	protected Object playLock = new Object();

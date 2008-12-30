@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 import org.gadilif.gmancala.model.BoardModel;
 import org.gadilif.gmancala.model.PlayerType;
 
-public class BoardSwingView extends JFrame implements IBoardView {
+/**
+ * @author Gadi
+ *
+ */
+public final class BoardSwingView extends JFrame implements IBoardView {
 
 	private static final long serialVersionUID = 1L;
 
