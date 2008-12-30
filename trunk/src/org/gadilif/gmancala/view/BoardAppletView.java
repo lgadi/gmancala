@@ -8,7 +8,11 @@ import org.gadilif.gmancala.model.PlayerType;
 import org.gadilif.gmancala.strategies.HumanPlayer;
 import org.gadilif.gmancala.strategies.SingleTurnLookAheadPlayer;
 
-public class BoardAppletView extends JApplet implements IBoardView {
+/**
+ * @author Gadi
+ *
+ */
+public final class BoardAppletView extends JApplet implements IBoardView {
 
 	private static final long serialVersionUID = 1L;
 	ViewDelegate viewDelegate;
@@ -32,7 +36,7 @@ public class BoardAppletView extends JApplet implements IBoardView {
 		controller.run();
 	}
 
-	public int getPlay(PlayerType playerType) {	
+	public int getPlay(final PlayerType playerType) {	
 		return viewDelegate.waitForPlay(playerType);
 	}
 

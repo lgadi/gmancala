@@ -8,7 +8,11 @@ import java.io.PrintStream;
 import org.gadilif.gmancala.model.BoardModel;
 import org.gadilif.gmancala.model.PlayerType;
 
-public class BoardTextView implements IBoardView {
+/**
+ * @author Gadi
+ *
+ */
+public final class BoardTextView implements IBoardView {
 
 	private PrintStream out = System.out;
 	
@@ -80,7 +84,11 @@ public class BoardTextView implements IBoardView {
 		System.out.print("Enter move for player "+playerType+": ");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
-			return Integer.parseInt(reader.readLine());
+			String result = reader.readLine();
+			if (result == null) {
+				return -1;
+			}
+			return Integer.parseInt(result);
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace(System.err);

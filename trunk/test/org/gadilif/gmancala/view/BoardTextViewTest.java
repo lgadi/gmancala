@@ -23,7 +23,7 @@ public class BoardTextViewTest {
 		boardTextView.init();
 	}
 
-	private class MyPrintStream extends PrintStream {
+	private static class MyPrintStream extends PrintStream {
 		int lineCount;
 		public MyPrintStream(final OutputStream out) {
 			super(out);

@@ -4,21 +4,28 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JButton;
 
-public class MancalaDrawableButton extends JButton {
+/**
+ * Customizable button, displays the contents with play items..
+ * @author Gadi
+ *
+ */
+public final class MancalaDrawableButton extends JButton {
 
 	private static final long serialVersionUID = 1L;
 	private int numberOfBalls;
 	private List<XYC> xyc = new ArrayList<XYC>();
 	private Color[] colors = new Color[]{Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.RED, Color.RED, Color.PINK, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW};
 	private static List<Color> balls = new ArrayList<Color>();
+	private final Random rng = new Random();
 	
 		
 	public MancalaDrawableButton(String string) {
 		for (int i=0;i<48;i++) {
-			balls.add(colors[(int)(Math.random()*10)]);
+			balls.add(colors[rng.nextInt(colors.length)]);
 		}
 	}
 
@@ -68,7 +75,7 @@ public class MancalaDrawableButton extends JButton {
 		
 	}
 	
-	private class XYC {
+	private static class XYC {
 		public int x;
 		public int y;
 		public Color c;

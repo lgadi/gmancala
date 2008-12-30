@@ -3,9 +3,17 @@ package org.gadilif.gmancala.strategies;
 import org.gadilif.gmancala.controller.BoardController;
 import org.gadilif.gmancala.model.PlayerType;
 
-public class RandomPlayer extends AbstractPlayer {
+/**
+ * @author Gadi
+ *
+ */
+public final class RandomPlayer extends AbstractPlayer {
 
-	public RandomPlayer(PlayerType player, BoardController controller) {
+	/**
+	 * @param player
+	 * @param controller
+	 */
+	public RandomPlayer(final PlayerType player, final BoardController controller) {
 		super(player, controller);
 	}
 
